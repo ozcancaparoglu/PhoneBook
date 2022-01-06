@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Contact.Application\Contact.Application.csproj" />
-    <ProjectReference Include="..\Contact.Domain\Contact.Domain.csproj" />
   </ItemGroup>
 
 </Project>

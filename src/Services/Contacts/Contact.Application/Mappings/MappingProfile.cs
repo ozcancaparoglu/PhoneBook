@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Contact.Application.Features.ContactPersons.Commands.SaveContactPerson;
+using Contact.Domain.ContactPersonAggregate;
 
 namespace Contact.Application.Mappings
 {
@@ -6,7 +8,7 @@ namespace Contact.Application.Mappings
     {
         public MappingProfile()
         {
-            
+            CreateMap<ContactPerson, SaveContactPersonCommand>().ReverseMap();
         }
     }
 }

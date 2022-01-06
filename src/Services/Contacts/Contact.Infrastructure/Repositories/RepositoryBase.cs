@@ -57,7 +57,7 @@ namespace Contact.Infrastructure.Repositories
             return await query.ToListAsync();
         }
 
-        public virtual async Task<T> GetByIdAsync(int id)
+        public virtual async Task<T> GetByIdAsync(Guid id)
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }
@@ -78,6 +78,12 @@ namespace Contact.Infrastructure.Repositories
         public async Task DeleteAsync(T entity)
         {
             _dbContext.Set<T>().Remove(entity);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteListAsync(IList<T> entities)
+        {
+            _dbContext.Set<T>().RemoveRange(entities);
             await _dbContext.SaveChangesAsync();
         }
     }

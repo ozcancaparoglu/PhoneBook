@@ -30,5 +30,10 @@ namespace Contact.Domain.ContactPersonAggregate
         {
             Info = info;
         }
+
+        public void SetType(ContactInfoType type)
+        {
+            Type = type;
+        }
     }
 }

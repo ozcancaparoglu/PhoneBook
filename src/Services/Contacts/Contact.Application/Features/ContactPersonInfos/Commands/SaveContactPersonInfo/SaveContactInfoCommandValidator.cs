@@ -10,8 +10,8 @@ namespace Contact.Application.Features.ContactPersonInfos.Commands.SaveContactPe
                 .NotEmpty().WithMessage("{ContactPersonId} is required.")
                 .NotNull();
 
-            RuleFor(p => p.ContactInfoType)
-                .NotEmpty().WithMessage("{ContactInfoType} is required.")
+            RuleFor(p => p.Type)
+                .NotEmpty().WithMessage("{Type} is required.")
                 .NotNull();
 
             RuleFor(p => p.Info)

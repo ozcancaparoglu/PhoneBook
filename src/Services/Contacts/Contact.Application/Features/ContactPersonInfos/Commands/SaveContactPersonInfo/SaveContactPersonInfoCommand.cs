@@ -7,7 +7,7 @@ namespace Contact.Application.Features.ContactPersonInfos.Commands.SaveContactPe
     public class SaveContactPersonInfoCommand : IRequest<bool>
     {
         public Guid ContactPersonId { get; set; }
-        public ContactInfoType ContactInfoType { get; set; }
+        public ContactInfoType Type { get; set; }
         public string Info { get; set; }
     }
 }

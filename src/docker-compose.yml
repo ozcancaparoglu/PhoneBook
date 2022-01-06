@@ -4,8 +4,14 @@ services:
   contactdb:
     image: postgres
 
+  reportdb:
+    image: mongo
+
   pgadmin:
     image: dpage/pgadmin4
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
 
   contact.api:
     image: ${DOCKER_REGISTRY-}contactapi
@@ -13,6 +19,13 @@ services:
       context: .
       dockerfile: Services/Contact/Contact.Api/Dockerfile
 
+  report.api:
+    image: ${DOCKER_REGISTRY-}reportapi
+    build:
+      context: .
+      dockerfile: Services/Reports/Report.Api/Dockerfile
+
 volumes:
   postgres_data:
   pgadmin_data:
+  mongo_data:

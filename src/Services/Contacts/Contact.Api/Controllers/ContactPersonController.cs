@@ -2,6 +2,7 @@
 using Contact.Application.Features.ContactPersons.Commands.SaveContactPerson;
 using Contact.Application.Features.ContactPersons.Queries.GetContactPersonList;
 using Contact.Application.Features.ContactPersons.Queries.GetContactWithInfo;
+using Contact.Application.Features.ContactPersons.Queries.GetReportWithLocation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +40,15 @@ namespace Contact.Api.Controllers
             var query = new GetContactWithInfoQuery(id);
             var contactWithInfo = await _mediator.Send(query);
             return Ok(contactWithInfo);
+        }
+
+        [HttpGet("GetReportWithLocation")]
+        [ProducesResponseType(typeof(GetReportWithLocationResponse), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<GetReportWithLocationResponse>> GetReportWithLocation(string location)
+        {
+            var query = new GetReportWithLocationQuery(location);
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
 
         [HttpPost(Name = "SaveContactPerson")]

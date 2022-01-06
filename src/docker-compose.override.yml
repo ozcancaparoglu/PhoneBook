@@ -13,6 +13,14 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
+  reportdb:
+    container_name: reportdb
+    restart: always
+    ports:
+        - "27017:27017"
+    volumes:
+        - mongo_data:/data/db
+
   pgadmin:
     container_name: pgadmin
     environment:
@@ -33,3 +41,14 @@ services:
       - contactdb
     ports:
       - "8000:80"
+
+  report.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://reportdb:27017"
+    depends_on:
+      - reportdb
+      - rabbitmq
+    ports:
+      - "8001:80"
+

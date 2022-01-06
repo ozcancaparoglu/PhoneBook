@@ -15,8 +15,7 @@ namespace Contact.Infrastructure
                 options.UseNpgsql(configuration.GetConnectionString("ContactConnectionString")));
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
-            services.AddScoped<IContactPersonRepository, ContactPersonRepository>();
-            services.AddScoped<IContactPersonInfoRepository, ContactPersonInfoRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }

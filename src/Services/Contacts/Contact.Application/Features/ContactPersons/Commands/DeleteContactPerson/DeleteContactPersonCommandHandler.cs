@@ -5,7 +5,6 @@ using Contact.Domain.ContactPersonAggregate;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,33 +12,29 @@ namespace Contact.Application.Features.ContactPersons.Commands.DeleteContactPers
 {
     public class DeleteContactPersonCommandHandler : IRequestHandler<DeleteContactPersonCommand>
     {
-        private readonly IContactPersonRepository _contactPersonRepository;
-        private readonly IContactPersonInfoRepository _contactPersonInfoRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILogger<DeleteContactPersonCommandHandler> _logger;
 
-        public DeleteContactPersonCommandHandler(IContactPersonRepository contactPersonRepository,
-            IContactPersonInfoRepository contactPersonInfoRepository,
+        public DeleteContactPersonCommandHandler(IUnitOfWork unitOfWork,
             IMapper mapper, ILogger<DeleteContactPersonCommandHandler> logger)
         {
-            _contactPersonRepository = contactPersonRepository ?? throw new ArgumentNullException(nameof(contactPersonRepository));
-            _contactPersonInfoRepository = contactPersonInfoRepository ?? throw new ArgumentNullException(nameof(contactPersonInfoRepository)); ;
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<Unit> Handle(DeleteContactPersonCommand request, CancellationToken cancellationToken)
         {
-            var contactWithLoading = await _contactPersonRepository.GetAsync(x => x.Id == request.Id, null, "ContactPersonInfos");
-            var contactToDelete = contactWithLoading.FirstOrDefault();
-            
+            var contactToDelete = await _unitOfWork.Repository<ContactPerson>().FindByProperties(x => x.Id == request.Id, "ContactPersonInfos");
+
             if (contactToDelete == null)
                 throw new NotFoundException(nameof(ContactPerson), request.Id);
 
-            if (contactToDelete.ContactPersonInfos.Count > 0)
-                await _contactPersonInfoRepository.DeleteListAsync(contactToDelete.ContactPersonInfos.ToList());
+            contactToDelete.DeleteAllContactInfos();
 
-            await _contactPersonRepository.DeleteAsync(contactToDelete);
+            _unitOfWork.Repository<ContactPerson>().Delete(contactToDelete);
+            await _unitOfWork.CommitAsync();
 
             _logger.LogInformation($"Contact Person {contactToDelete.Id} is successfully deleted.");
 

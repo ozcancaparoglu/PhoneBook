@@ -9,20 +9,22 @@ namespace Contact.Application.Contracts.Persistence
 {
     public interface IAsyncRepository<T> where T : EntityBase
     {
-        Task<IReadOnlyList<T>> GetAllAsync();
-        Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate);
-        Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null,
-                                        Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-                                        string includeString = null,
-                                        bool disableTracking = true);
-        Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null,
-                                       Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-                                       List<Expression<Func<T, object>>> includes = null,
-                                       bool disableTracking = true);
-        Task<T> GetByIdAsync(Guid id);
-        Task<T> AddAsync(T entity);
-        Task UpdateAsync(T entity);
-        Task DeleteAsync(T entity);
-        Task DeleteListAsync(IList<T> entities);
+        Task Add(T entity);
+        void BulkDelete(ICollection<T> entities);
+        Task BulkInsert(ICollection<T> entities);
+        void BulkUpdate(ICollection<T> entities);
+        Task<int> Count();
+        Task<int> CountExpression(Expression<Func<T, bool>> predicate, bool isActive = true);
+        Task<ICollection<T>> Filter(Expression<Func<T, bool>> match);
+        Task<ICollection<T>> FilterWithProperties(Expression<Func<T, bool>> filter = null,
+           string includeProperties = "", Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+           int? page = null, int? pageSize = null);
+        Task<T> Find(Expression<Func<T, bool>> match);
+        Task<T> FindByProperties(Expression<Func<T, bool>> match, string includeProperties = "");
+        Task<ICollection<T>> GetAll();
+        Task<T> GetById(Guid id);
+        IQueryable<T> Table();
+        T Update(T entity);
+        void Delete(T entity);
     }
 }

@@ -10,6 +10,9 @@ namespace Contact.Domain.ContactPersonAggregate
         public ContactInfoType Type { get; protected set; }
         public string Info { get; protected set; }
 
+        public ContactPersonInfo()
+        {
+        }
         public ContactPersonInfo(Guid contactPersonId, ContactInfoType type, string info)
         {
             ContactPersonId = contactPersonId;

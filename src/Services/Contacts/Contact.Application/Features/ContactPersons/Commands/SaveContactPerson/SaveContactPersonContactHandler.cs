@@ -9,28 +9,35 @@ using System.Threading.Tasks;
 
 namespace Contact.Application.Features.ContactPersons.Commands.SaveContactPerson
 {
-    public class SaveContactPersonContactHandler : IRequestHandler<SaveContactPersonCommand, Guid>
+    public class SaveContactPersonContactHandler : IRequestHandler<SaveContactPersonCommand, string>
     {
-        private readonly IContactPersonRepository _contactPersonRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILogger<SaveContactPersonContactHandler> _logger;
 
-        public SaveContactPersonContactHandler(IContactPersonRepository contactPersonRepository, IMapper mapper,
+        public SaveContactPersonContactHandler(IUnitOfWork unitOfWork, IMapper mapper,
             ILogger<SaveContactPersonContactHandler> logger)
         {
-            _contactPersonRepository = contactPersonRepository ?? throw new ArgumentNullException(nameof(contactPersonRepository));
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<Guid> Handle(SaveContactPersonCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(SaveContactPersonCommand request, CancellationToken cancellationToken)
         {
+            var existing = _unitOfWork.Repository<ContactPerson>().Find(x => x.Name == request.Name
+            && x.Surname == request.Surname);
+
+            if (existing != null)
+                return "Person already exists.";
+
             var contactPersonEntity = _mapper.Map<ContactPerson>(request);
-            var newContactPerson = await _contactPersonRepository.AddAsync(contactPersonEntity);
+            await _unitOfWork.Repository<ContactPerson>().Add(contactPersonEntity);
+            await _unitOfWork.CommitAsync();
 
-            _logger.LogInformation($"Contact {newContactPerson.Id} is successfully created.");
+            _logger.LogInformation($"Contact {contactPersonEntity.Name}, {contactPersonEntity.Surname} is successfully created.");
 
-            return newContactPerson.Id;
+            return $"{contactPersonEntity.Name}, {contactPersonEntity.Surname}";
         }
     }
 }

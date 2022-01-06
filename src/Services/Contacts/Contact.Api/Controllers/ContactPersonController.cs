@@ -1,6 +1,7 @@
 ﻿using Contact.Application.Features.ContactPersons.Commands.DeleteContactPerson;
 using Contact.Application.Features.ContactPersons.Commands.SaveContactPerson;
 using Contact.Application.Features.ContactPersons.Queries.GetContactPersonList;
+using Contact.Application.Features.ContactPersons.Queries.GetContactWithInfo;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ namespace Contact.Api.Controllers
 
         public ContactPersonController(IMediator mediator)
         {
-            _mediator = mediator;
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         [HttpGet(Name = "GetContacts")]
@@ -31,13 +32,23 @@ namespace Contact.Api.Controllers
             return Ok(contacts);
         }
 
+        [HttpGet("{id}", Name = "GetContactWithInfo")]
+        [ProducesResponseType(typeof(ContactPersonWithInfoResponse), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<ContactPersonWithInfoResponse>> GetContactWithInfo(Guid id)
+        {
+            var query = new GetContactWithInfoQuery(id);
+            var contactWithInfo = await _mediator.Send(query);
+            return Ok(contactWithInfo);
+        }
+
         [HttpPost(Name = "SaveContactPerson")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult<int>> SaveContactPerson([FromBody] SaveContactPersonCommand command)
+        public async Task<ActionResult<string>> SaveContactPerson([FromBody] SaveContactPersonCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);
         }
+
 
         [HttpDelete("{id}", Name = "DeleteContactPerson")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

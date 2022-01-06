@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Contact.Application.Contracts.Persistence;
+using Contact.Domain.ContactPersonAggregate;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,18 +11,18 @@ namespace Contact.Application.Features.ContactPersons.Queries.GetContactPersonLi
 {
     public class GetContactPersonListQueryHandler : IRequestHandler<GetContactPersonListQuery, List<ContactPersonResponse>>
     {
-        private readonly IContactPersonRepository _contactPersonRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public GetContactPersonListQueryHandler(IContactPersonRepository contactPersonRepository, IMapper mapper)
+        public GetContactPersonListQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _contactPersonRepository = contactPersonRepository ?? throw new ArgumentNullException(nameof(contactPersonRepository));
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<List<ContactPersonResponse>> Handle(GetContactPersonListQuery request, CancellationToken cancellationToken)
         {
-            var contactPersonList = await _contactPersonRepository.GetAllAsync();
+            var contactPersonList = await _unitOfWork.Repository<ContactPerson>().GetAll();
             return _mapper.Map<List<ContactPersonResponse>>(contactPersonList);
         }
     }

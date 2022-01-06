@@ -1,4 +1,5 @@
 ﻿using Contact.Domain.Common;
+using Contact.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -48,14 +49,19 @@ namespace Contact.Domain.ContactPersonAggregate
                 exist.SetInfo(contactInfo.Info);
         }
 
-        public void DeleteContactInfo(ContactPersonInfo contactInfo)
+        public void DeleteContactInfo(ContactInfoType type)
         {
-            var exist = _contactPersonInfos.FirstOrDefault(x => x.Type == contactInfo.Type && x.Info == contactInfo.Info);
+            var exist = _contactPersonInfos.FirstOrDefault(x => x.Type == type);
 
             if (exist == null)
-                throw new ArgumentNullException(nameof(contactInfo.Type));
+                throw new ArgumentNullException(nameof(type));
 
             _contactPersonInfos.Remove(exist);
+        }
+
+        public void DeleteAllContactInfos()
+        {
+            _contactPersonInfos.Clear();
         }
     }
 }

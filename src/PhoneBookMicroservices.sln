@@ -7,15 +7,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{E4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contacts", "Contacts", "{27174FEA-B4B9-4232-982C-1CBFE33BAD55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contact.Api", "Services\Contacts\Contact.Api\Contact.Api.csproj", "{B9F90125-235D-40D3-9269-EC0F69053FA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contact.Api", "Services\Contacts\Contact.Api\Contact.Api.csproj", "{B9F90125-235D-40D3-9269-EC0F69053FA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contact.Infrastructure", "Services\Contacts\Contact.Infrastructure\Contact.Infrastructure.csproj", "{36DEB217-E2FB-44D8-AEEA-399F2C18F1FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contact.Infrastructure", "Services\Contacts\Contact.Infrastructure\Contact.Infrastructure.csproj", "{36DEB217-E2FB-44D8-AEEA-399F2C18F1FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contact.Domain", "Services\Contacts\Contact.Domain\Contact.Domain.csproj", "{0BD21ECA-CEB3-4C18-9EDA-160D997B0A0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contact.Domain", "Services\Contacts\Contact.Domain\Contact.Domain.csproj", "{0BD21ECA-CEB3-4C18-9EDA-160D997B0A0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contact.Application", "Services\Contacts\Contact.Application\Contact.Application.csproj", "{A4626C06-F00F-4FE4-A6C3-063F0E548059}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contact.Application", "Services\Contacts\Contact.Application\Contact.Application.csproj", "{A4626C06-F00F-4FE4-A6C3-063F0E548059}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4DA242D4-2739-4691-A7DE-D272FED88798}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Reports", "Reports", "{BC85ECE3-C7D1-4453-B6F4-72CD4E4AB124}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Report.Api", "..\Services\Reports\Report.Api\Report.Api.csproj", "{5F8F079A-4659-42DA-940B-048DD74314CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +47,10 @@ Global
 		{4DA242D4-2739-4691-A7DE-D272FED88798}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DA242D4-2739-4691-A7DE-D272FED88798}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DA242D4-2739-4691-A7DE-D272FED88798}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F8F079A-4659-42DA-940B-048DD74314CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F8F079A-4659-42DA-940B-048DD74314CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F8F079A-4659-42DA-940B-048DD74314CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F8F079A-4659-42DA-940B-048DD74314CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +61,8 @@ Global
 		{36DEB217-E2FB-44D8-AEEA-399F2C18F1FE} = {27174FEA-B4B9-4232-982C-1CBFE33BAD55}
 		{0BD21ECA-CEB3-4C18-9EDA-160D997B0A0E} = {27174FEA-B4B9-4232-982C-1CBFE33BAD55}
 		{A4626C06-F00F-4FE4-A6C3-063F0E548059} = {27174FEA-B4B9-4232-982C-1CBFE33BAD55}
+		{BC85ECE3-C7D1-4453-B6F4-72CD4E4AB124} = {E4766F6A-E0CF-40EC-A7D9-924172960B99}
+		{5F8F079A-4659-42DA-940B-048DD74314CC} = {BC85ECE3-C7D1-4453-B6F4-72CD4E4AB124}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F0F850EF-5006-481D-A62C-6606A5ED92FE}

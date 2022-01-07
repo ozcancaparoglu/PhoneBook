@@ -32,6 +32,13 @@ services:
     volumes:
       - pgadmin_data:/root/.pgadmin
 
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+        - "5672:5672"
+        - "15672:15672"
+
   contact.api:
     container_name: contact.api
     environment:
@@ -43,6 +50,7 @@ services:
       - "8000:80"
 
   report.api:
+    container_name: report.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings:ConnectionString=mongodb://reportdb:27017"

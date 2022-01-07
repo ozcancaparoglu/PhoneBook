@@ -1,9 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Report.Api.Communicator.Contact.Model;
 using Report.Api.Communicator.Helper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Report.Api.Communicator.Contact
@@ -17,12 +15,12 @@ namespace Report.Api.Communicator.Contact
             _baseUrl = configuration["ContactBaseUrl"];
         }
 
-        public async Task<int> GetInfoByLocation(string location)
+        public async Task<GetReportModel> GetInfoByLocation(string location)
         {
             IRestClientHelper _restClientHelper = new RestClientHelper();
-            var result = await _restClientHelper.GetAsync(_baseUrl + "/cargoCommission/getCargoCommission");
+            var result = await _restClientHelper.GetAsync($"{_baseUrl}/GetReportWithLocation?location={location}");
 
-            return JsonConvert.DeserializeObject<ResponseBase<List<GetCargoCommissionResponse>>>(result);
+            return JsonConvert.DeserializeObject<GetReportModel>(result);
         }
     }
 }

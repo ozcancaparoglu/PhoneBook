@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Report.Api.Communicator.Contact;
+using Report.Api.Data;
+using Report.Api.Data.Interfaces;
 using Report.Api.Repositories;
 using Report.Api.Repositories.Interfaces;
 
@@ -24,6 +26,7 @@ namespace Report.Api
         public void ConfigureServices(IServiceCollection services)
         {
             // General Configuration
+            services.AddScoped<IReportContext, ReportContext>();
             services.AddScoped<IContactReportRepository, ContactReportRepository>();
             services.AddScoped<IContactCommunicator, ContactCommunicator>();
 

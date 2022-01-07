@@ -39,8 +39,11 @@ vermeye devam ediyor. (Docker üzerinde neden çalışmıyor hiç anlamadım.)
 Her ikisini de visual studio üzerinden çalıştırarak denedim.
 
 > Eğer api'lar docker üzerinde çalışırsa çektiğinizde
+
 **Contact.Api** => http://localhost:8000/swagger/index
+
 **Report.Api** => http://localhost:8001/swagger/index
+
 Bu durumda Report.Api'daki appsettings'de ContactBaseUrl'i http://localhost:8000 olarak değiştirmeniz gerekiyor.
 
 

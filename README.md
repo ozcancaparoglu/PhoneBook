@@ -29,8 +29,11 @@ docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
 ## Notes
 
 > Api projelerini docker üzerinde çalıştırmadım;
-**Contact.Api** => Could not load type 'Npgsql.TypeMapping.NpgsqlTypeMapping' from assembly 'Npgsql, Version=6.0.2.0
-böyle bir hata veriyor. Baştan sildim NugetPackage'ları düzelttim hatta solution'ı baştan create ettim .NET 6.0 framework ve sdk'lar karıştığından dolayı olabilir.
+
+**Contact.Api** => Could not load type 'Npgsql.TypeMapping.NpgsqlTypeMapping' from assembly 'Npgsql, Version=6.0.2.0 böyle bir hata veriyor.
+ 
+Baştan sildim NugetPackage'ları düzelttim hatta solution'ı baştan create ettim .NET 6.0 framework ve sdk'lar karıştığından dolayı olabilir.
+
 https://github.com/elsa-workflows/elsa-core/issues/2544
 
 **Report.Api** => Unable to resolve service for type 'Report.Api.Data.Interfaces.IReportContext' hatası veriyor. Scope yapıldığı halde docker üzerinde hata

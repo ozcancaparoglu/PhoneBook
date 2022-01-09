@@ -11,12 +11,21 @@ namespace Contact.Infrastructure.Persistence
 {
     public class ContactContext : DbContext
     {
+        public ContactContext()
+        {
+        }
+
         public ContactContext(DbContextOptions<ContactContext> options) : base(options)
         {
         }
 
         public DbSet<ContactPerson> ContactPersons { get; set; }
         public DbSet<ContactPersonInfo> ContactPersonInfos { get; set; }
+
+        //Only for unit test. Comment out when publish.
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        => options.UseNpgsql("Server=localhost;Port=5432;Database=ContactDb;User Id=admin;Password=admin1234;");
+
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

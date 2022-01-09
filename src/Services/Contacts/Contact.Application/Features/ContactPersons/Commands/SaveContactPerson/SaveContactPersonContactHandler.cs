@@ -25,7 +25,7 @@ namespace Contact.Application.Features.ContactPersons.Commands.SaveContactPerson
 
         public async Task<string> Handle(SaveContactPersonCommand request, CancellationToken cancellationToken)
         {
-            var existing = _unitOfWork.Repository<ContactPerson>().Find(x => x.Name == request.Name
+            var existing = await _unitOfWork.Repository<ContactPerson>().Find(x => x.Name == request.Name
             && x.Surname == request.Surname);
 
             if (existing != null)

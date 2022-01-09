@@ -43,7 +43,7 @@ namespace Report.Api.Controllers
             await _publishEndpoint.Publish(new ContactReportEvent { Location = location });
             var res = await _communicator.GetInfoByLocation(location);
 
-            return Accepted();
+            return Ok(res);
         }
 
         [HttpGet]
